@@ -1,0 +1,23 @@
+# Default values for helm.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+# This will set the replicaset count more information can be found here: https://kubernetes.io/docs/concepts/workloads/controllers/replicaset/
+replicaCount: 1
+
+# This sets the container image more information can be found here: https://kubernetes.io/docs/concepts/containers/images/
+image:
+  repository: "ghcr.io/srudyka/kbot"
+  pullPolicy: IfNotPresent
+  tag: "v1.0.2-8362fc4-linux-amd64"
+  arch: amd64
+
+imagePullSecrets:
+  - name: ghcr-login-secret
+
+secret:
+  name: "kbot"
+  key: "token"
+  env: "TELE_TOKEN"  
+securityContext:
+  priviledged: true
