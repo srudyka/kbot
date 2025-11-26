@@ -10,6 +10,8 @@ env:
   TARGETARCH: amd64
   TARGETOS: linux
   CGO_ENABLED: 0
+  GITHUBACTOR: ${{ vars.GITHUBACTOR }}
+  GITHUBTOKEN: ${{ secrets.GITHUBTOKEN }}
   
 jobs:
   ci:
