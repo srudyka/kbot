@@ -4,20 +4,17 @@
 
 # This will set the replicaset count more information can be found here: https://kubernetes.io/docs/concepts/workloads/controllers/replicaset/
 replicaCount: 1
-
 # This sets the container image more information can be found here: https://kubernetes.io/docs/concepts/containers/images/
 image:
   repository: "ghcr.io/srudyka/kbot"
   pullPolicy: IfNotPresent
-  tag: "v1.0.2-8362fc4-linux-amd64"
+  tag: "v1.1.1-4cc468c"
   arch: amd64
-
 imagePullSecrets:
   - name: ghcr-login-secret
-
 secret:
   name: "kbot"
   key: "token"
-  env: "TELE_TOKEN"  
+  env: "TELE_TOKEN"
 securityContext:
   priviledged: true
