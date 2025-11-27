@@ -9,7 +9,7 @@ image:
   registry: "ghcr.io"
   repository: "srudyka/kbot"
   pullPolicy: IfNotPresent
-  tag: "v1.1.2-b4d7cdf"
+  tag: "v1.1.4-6a83180"
   arch: amd64
 imagePullSecrets:
   - name: ghcr-login-secret
