@@ -6,9 +6,10 @@
 replicaCount: 1
 # This sets the container image more information can be found here: https://kubernetes.io/docs/concepts/containers/images/
 image:
-  repository: "ghcr.io/srudyka/kbot"
+  registry: "ghcr.io"
+  repository: "srudyka/kbot"
   pullPolicy: IfNotPresent
-  tag: "v1.1.1-4cc468c"
+  tag: "v1.1.2-b4d7cdf"
   arch: amd64
 imagePullSecrets:
   - name: ghcr-login-secret
