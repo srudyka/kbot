@@ -11,6 +11,7 @@ image:
   pullPolicy: IfNotPresent
   tag: "v1.1.5-af7ffba"
   arch: linux-amd64
+  os: linux
 imagePullSecrets:
   - name: ghcr-login-secret
 secret:
