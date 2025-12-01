@@ -71,11 +71,11 @@ jobs:
           echo "VERSION=$VERSION" >> $GITHUB_ENV
           echo "Using version: $VERSION"
 
-      - name: Set target architecture
-        shell: bash
-        run: |
-          export TARGETARCH="$TARGETOS-$TARGETARCH"
-          echo "TARGETARCH=$TARGETARCH" >> $GITHUB_ENV
+   #   - name: Set target architecture
+   #     shell: bash
+   #     run: |
+   #       export TARGETARCH="$TARGETOS-$TARGETARCH"
+   #       echo "TARGETARCH=$TARGETARCH" >> $GITHUB_ENV
           
       - name: Update Helm chart
         uses: mikefarah/yq@master
