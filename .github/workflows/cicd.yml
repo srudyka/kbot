@@ -6,9 +6,9 @@ permissions:
 
 on:
   push:
-    branches: [ main ]
+    branches: [ develop ]
   pull_request:
-    branches: [ main ]
+    branches: [ develop ]
 
 env:
   TARGETARCH: amd64
@@ -43,7 +43,7 @@ jobs:
   cd:
     name: CD
     needs: ci
-    if: github.ref == 'refs/heads/main'
+    if: github.ref == 'refs/heads/develop'
     runs-on: ubuntu-latest
 
     steps:
@@ -71,6 +71,12 @@ jobs:
           echo "VERSION=$VERSION" >> $GITHUB_ENV
           echo "Using version: $VERSION"
 
+   #   - name: Set target architecture
+   #     shell: bash
+   #     run: |
+   #       export TARGETARCH="$TARGETOS-$TARGETARCH"
+   #       echo "TARGETARCH=$TARGETARCH" >> $GITHUB_ENV
+          
       - name: Update Helm chart
         uses: mikefarah/yq@master
         with:
