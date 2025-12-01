@@ -9,7 +9,7 @@ image:
   registry: "ghcr.io"
   repository: "srudyka/kbot"
   pullPolicy: IfNotPresent
-  tag: "v1.1.5-af7ffba"
+  tag: "v1.1.6-cf039e3"
   arch: linux-amd64
   os: linux
 imagePullSecrets:
