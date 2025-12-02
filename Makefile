@@ -1,5 +1,5 @@
 APP=$(shell basename $(shell git remote get-url origin) .git)
-REGISTRY=ghcr.io/${GITHUBACTOR}
+REGISTRY ?= ghcr.io/${GITHUBACTOR}
 VERSION=$(shell git describe --tags --abbrev=0)-$(shell git rev-parse --short HEAD)
 # user is able to pass "darwin" to build binary for macOS
 # but we build docekr image only for linux
@@ -25,12 +25,12 @@ image:
 	docker build . -t ${REGISTRY}/${APP}:${VERSION}-${TARGETOS}-${TARGETARCH} --build-arg TARGETOS=${TARGETOS} --build-arg TARGETARCH=${TARGETARCH}
 
 registry_logout:
-	docker logout ghcr.io
+	docker logout ${REGISTRY}
 
 registry_login:
-	docker login ghcr.io --username ${GITHUBACTOR} --password ${GITHUBTOKEN}
+	docker login ${REGISTRY} --username ${GITHUBACTOR} --password ${GITHUBTOKEN}
 
-push: registry_logout registry_login image
+push:
 	docker push ${REGISTRY}/${APP}:${VERSION}-${TARGETOS}-${TARGETARCH}
 
 clean:
