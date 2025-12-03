@@ -56,14 +56,14 @@ pipeline {
    stage("build") {
      steps {
        echo "BUILD EXECUTION STARTED"
-       sh "export PATH=$PATH:/usr/local/go/bin && export GOPATH=$HOME/go && make build"
+       sh "export PATH=$PATH:/usr/local/go/bin && export GOPATH=$HOME/go && make build GITHUBACTOR=srudyka"
      }
    }
    stage("image") {
      steps {
       script {
        echo "BUILD EXECUTION STARTED"
-       sh 'make image REGISTRY=docker.io'
+       sh 'make image REGISTRY=docker.io/sergeyrudyka'
      }
    }
    }
@@ -72,10 +72,23 @@ pipeline {
      steps {
        script {
          docker.withRegistry('', "dockerhub" ) {
-         sh 'make push REGISTRY=docker.io'
+         sh 'make push REGISTRY=docker.io/sergeyrudyka'
        }
      }
    }
 }
+
 }
+ post {
+        always {
+            echo "Pipeline finished. Cleaning workspace."
+            sh 'make clean'
+        }
+        success {
+            echo "Pipeline succeeded."
+        }
+        failure {
+            echo "Pipeline failed."
+        }
+    }
 }
