@@ -1,0 +1,69 @@
+name: CI
+
+on:
+  pull_request:
+    branches: [ "main" ]
+
+env:
+  TARGETARCH: amd64
+  TARGETOS: linux
+  REGISTRY: ghcr.io
+  IMAGE_NAME: ${{ github.repository }}
+  GITHUBACTOR: ${{ vars.GITHUBACTOR }}
+  GITHUBTOKEN: ${{ secrets.GITHUBTOKEN }}
+  
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+
+      - name: Set up Go
+        uses: actions/setup-go@v6
+        with:
+          go-version: '1.25.4'
+          cache: true
+
+      - name: Build and test
+        run: |
+          go build -v ./...
+          go test -v ./...
+
+      - name: Log in to the Container registry
+        uses: docker/login-action@v3
+        with:
+          registry: ${{ env.REGISTRY }}
+          username: ${{ env.GITHUBACTOR }}
+          password: ${{ env.GITHUBTOKEN }}
+      - name: Extract real PR branch
+        run: |
+          echo "PR_BRANCH=${{ github.event.pull_request.head.ref }}" >> $GITHUB_ENV
+          echo "PR_COMMIT=${{ github.event.pull_request.head.sha }}" >> $GITHUB_ENV
+
+
+      - name: Extract metadata (tags, labels) for Docker
+        id: meta
+        uses: docker/metadata-action@v5
+        with:
+          context: workflow
+          images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
+          tags: |
+            type=raw,value=${{ env.PR_COMMIT }}
+            type=raw,value=${{ env.PR_BRANCH }}
+
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          push: true
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }} 
+          build-args: APP_BUILD_INFO=${{ env.PR_COMMIT }}
