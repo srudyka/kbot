@@ -12,5 +12,5 @@ FROM scratch
 WORKDIR /
 COPY --from=builder /go/src/app/kbot /kbot
 COPY --from=certs /etc/ssl/certs/ca-certificates.crt /etc/ssl/certs/
-ENTRYPOINT ["/usr/local/bin/kbot"]
+ENTRYPOINT ["/kbot"]
 CMD ["kbot"]
