@@ -72,6 +72,7 @@ jobs:
       - name: Update Helm values with new image tag
         run: |
           export VERSION=$(echo ${{ github.ref_name }} | sed 's/^v//')
+          yq e -i '.image.repository = "${{ env.REGISTRY }}/${{ github.repository_owner }}/${{ env.IMAGE_NAME }}"' helm/values.yaml
           yq e -i '.image.tag = strenv(VERSION)' helm/values.yaml
           cat helm/values.yaml
 
