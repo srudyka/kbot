@@ -10,7 +10,7 @@ RUN gofmt -s -w ./
 RUN echo $(git describe --tags --abbrev=0)-$(echo -n ${APP_BUILD_INFO}|cut -c1-7)-${TARGETARCH}
 RUN CGO_ENABLED=0 GOOS=${TARGETOS} GOARCH=${TARGETARCH}  \
     go build -v -o kbot\ 
-    -ldflags "-X="github.com/den-vasyliev/kbot/cmd.appVersion=$(git describe --tags --abbrev=0)-$(echo -n ${APP_BUILD_INFO}|cut -c1-7)-${TARGETARCH}
+    -ldflags "-X="github.com/srudyka/kbot/cmd.appVersion=$(git describe --tags --abbrev=0)-$(echo -n ${APP_BUILD_INFO}|cut -c1-7)-${TARGETARCH}
 
 FROM scratch AS bin
 WORKDIR /
