@@ -13,13 +13,15 @@ spec:
     name: app-kbot
     namespace: flux-system
 ---
-apiVersion: source.toolkit.fluxcd.io/v1beta2
+apiVersion: source.toolkit.fluxcd.io/v1
 kind: OCIRepository
 metadata:
   name: app-kbot
   namespace: flux-system
 spec:
   interval: 1m
-  url: oci://ghcr.io/srudyka/charts/kbot
+  url: oci://ghcr.io/srudyka/charts/helm
+  secretRef:
+    name: ghcr-creds
   ref:
     semver: ">2.2.0"
